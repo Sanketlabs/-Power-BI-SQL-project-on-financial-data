@@ -1,0 +1,155 @@
+📊 Loan Applications
+Dax: 
+Total Loan Application = COUNT(Bank_loan_Data[id])
+
+MTD Loan Application = 
+CALCULATE(
+    [Total Loan Application],
+    TOTALMTD('Date Table'[Date])
+)
+
+PMTD Loan Application = 
+CALCULATE(
+    [Total Loan Application],
+    DATESMTD(DATEADD('Date Table'[Date], -1, MONTH))
+)
+
+MOM Loan Application = 
+DIVIDE(
+    [MTD Loan Application] - [PMTD Loan Application],
+    [PMTD Loan Application]
+)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+💰 Funded Amount:
+Total Funded Amount = SUM(Bank_loan_Data[loan_amount])
+
+MTD Total Funded Amount = 
+CALCULATE(
+    [Total Funded Amount],
+    TOTALMTD('Date Table'[Date])
+)
+
+PMTD Total Funded Amount = 
+CALCULATE(
+    [Total Funded Amount],
+    DATESMTD(DATEADD('Date Table'[Date], -1, MONTH))
+)
+
+MOM Total Funded Amount = 
+DIVIDE(
+    [MTD Total Funded Amount] - [PMTD Total Funded Amount],
+    [PMTD Total Funded Amount]
+)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+💵 Total Amount Received
+Total Amount Received = SUM(Bank_loan_Data[total_payment])
+
+MTD Total Amount Received = 
+CALCULATE(
+    [Total Amount Received],
+    TOTALMTD('Date Table'[Date])
+)
+
+PMTD Total Amount Received = 
+CALCULATE(
+    [Total Amount Received],
+    DATESMTD(DATEADD('Date Table'[Date], -1, MONTH))
+)
+
+MOM Total Amount Received = 
+DIVIDE(
+    [MTD Total Amount Received] - [PMTD Total Amount Received],
+    [PMTD Total Amount Received]
+)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+📈 Interest Rate
+Avg Interest Rate = AVERAGE(Bank_loan_Data[int_rate])
+
+MTD Avg Interest Rate = 
+CALCULATE(
+    [Avg Interest Rate],
+    TOTALMTD('Date Table'[Date])
+)
+
+PMTD Avg Interest Rate = 
+CALCULATE(
+    [Avg Interest Rate],
+    DATESMTD(DATEADD('Date Table'[Date], -1, MONTH))
+)
+
+MOM Avg Interest Rate = 
+DIVIDE(
+    [MTD Avg Interest Rate] - [PMTD Avg Interest Rate],
+    [PMTD Avg Interest Rate]
+)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+📊 Debt-to-Income (DTI) Ratio
+Avg DTI Rate = AVERAGE(Bank_loan_Data[dti])
+
+MTD Avg DTI Rate = 
+CALCULATE(
+    [Avg DTI Rate],
+    TOTALMTD('Date Table'[Date])
+)
+
+PMTD Avg DTI Rate = 
+CALCULATE(
+    [Avg DTI Rate],
+    DATESMTD(DATEADD('Date Table'[Date], -1, MONTH))
+)
+
+MOM Avg DTI Rate = 
+DIVIDE(
+    [MTD Avg DTI Rate] - [PMTD Avg DTI Rate],
+    [PMTD Avg DTI Rate]
+)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+✅ Good Loan Metrics
+Good Loan Application = 
+CALCULATE(
+    [Total Loan Application],
+    Bank_loan_Data[Good vs Bad Loan] = "Good Loan"
+)
+
+Good Loan % = 
+DIVIDE(
+    [Good Loan Application],
+    [Total Loan Application]
+)
+
+Good Loan Funded Amount = 
+CALCULATE(
+    [Total Funded Amount],
+    Bank_loan_Data[Good vs Bad Loan] = "Good Loan"
+)
+
+Good Loan Received Amount = 
+CALCULATE(
+    [Total Amount Received],
+    Bank_loan_Data[Good vs Bad Loan] = "Good Loan"
+)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+❌ Bad Loan Metrics
+Bad Loan Application = 
+CALCULATE(
+    [Total Loan Application],
+    Bank_loan_Data[Good vs Bad Loan] = "Bad Loan"
+)
+
+Bad Loan % = 
+DIVIDE(
+    [Bad Loan Application],
+    [Total Loan Application]
+)
+
+Bad Loan Funded Amount = 
+CALCULATE(
+    [Total Funded Amount],
+    Bank_loan_Data[Good vs Bad Loan] = "Bad Loan"
+)
+
+Bad Loan Received Amount = 
+CALCULATE(
+    [Total Amount Received],
+    Bank_loan_Data[Good vs Bad Loan] = "Bad Loan"
+)
